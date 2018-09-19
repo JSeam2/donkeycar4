@@ -20,7 +20,7 @@ from donkeycar.parts.camera import PiCamera
 from donkeycar.parts.transform import Lambda
 from donkeycar.parts.keras import KerasLinear
 from donkeycar.parts.actuator import PCA9685, PWMSteering, PWMThrottle
-from donkeycar.parts.datastore import TubGroup, TubWriter
+from donkeycar.parts.datastore import TubGroup, TubWriter, Tub
 from controller import LocalWebController, JoystickController
 from donkeyclock import Timestamp
 from kerasmodels import *
@@ -111,7 +111,7 @@ def drive(cfg, model_path=None, use_joystick=False, use_chaos=False):
 
     throttle_controller = PCA9685(cfg.THROTTLE_CHANNEL)
     throttle = PWMThrottle(controller=throttle_controller,
-                           max_pulse=cfg.THROTTLE_FORWARD_PWM * 1.8,
+                           max_pulse=cfg.THROTTLE_FORWARD_PWM,
                            zero_pulse=cfg.THROTTLE_STOPPED_PWM,
                            min_pulse=cfg.THROTTLE_REVERSE_PWM)
 
@@ -158,7 +158,9 @@ def train(cfg, tub_names, new_model_path, base_model_path=None):
     tubgroup = TubGroup(tub_names)
     train_gen, val_gen = tubgroup.get_train_val_gen(X_keys, y_keys,
                                                     batch_size=cfg.BATCH_SIZE,
-                                                    train_frac=cfg.TRAIN_TEST_SPLIT)
+                                                    train_frac=cfg.TRAIN_TEST_SPLIT,
+                                                    train_record_transform=utils.linear_bin,
+                                                    val_record_transform=utils.linear_bin)
 
     total_records = len(tubgroup.df)
     total_train = int(total_records * cfg.TRAIN_TEST_SPLIT)

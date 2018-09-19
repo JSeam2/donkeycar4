@@ -184,7 +184,7 @@ class KerasBehavioral(KerasPilot):
     A Keras part that take an image and Behavior vector as input,
     outputs steering and throttle
     '''
-    def __init__(self, model=None, num_outputs=2, num_behavior_inputs=2, input_shape=(120, 160, 3), *args, **kwargs):
+    def __init__(self, model=None, num_outputs=2, num_behavior_inputs=0, input_shape=(120, 160, 3), *args, **kwargs):
         super(KerasBehavioral, self).__init__(*args, **kwargs)
         self.model = default_bhv(num_outputs = num_outputs, num_bvh_inputs = num_behavior_inputs, input_shape=input_shape)
         self.compile()
@@ -277,7 +277,7 @@ def default_categorical(input_shape=(120, 160, 3)):
     angle_out = Dense(15, activation='softmax', name='angle_out')(x)        # Connect every input with every output and output 15 hidden units. Use Softmax to give percentage. 15 categories and find best one based off percentage 0.0-1.0
     
     #continous output of throttle
-    throttle_out = Dense(20, activation='softmax', name='throttle_out')(x)      # Reduce to 1 number, Positive number only
+    throttle_out = Dense(15, activation='softmax', name='throttle_out')(x)      # Reduce to 1 number, Positive number only
     
     model = Model(inputs=[img_in], outputs=[angle_out, throttle_out])
     return model

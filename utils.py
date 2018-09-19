@@ -178,12 +178,28 @@ def linear_bin(a, N=15, offset=1, R=2.0):
     map val A to range R
     offset one hot bin by offset, commonly R/2
     '''
-    a = a + offset
-    b = round(a / (R/(N-offset)))
+    # Do nothing 
+    # a['cam/image_array']
+
+    # bin a['user/angle']
+    a['user/angle'] = a['user/angle'] + offset
+    b = round(a['user/angle'] / (R/(N-offset)))
     arr = np.zeros(N)
     b = clamp(b, 0, N - 1)
     arr[int(b)] = 1
-    return arr
+    a['user/angle'] = arr
+
+    # bin a['user/throttle']
+    a['user/throttle'] = a['user/throttle'] + offset
+    b = round(a['user/throttle'] / (R/(N-offset)))
+    arr = np.zeros(N)
+    b = clamp(b, 0, N - 1)
+    arr[int(b)] = 1
+    a['user/throttle'] = arr
+
+    print(a)
+
+    return a
 
 
 def linear_unbin(arr, N=15, offset=-1, R=2.0):
