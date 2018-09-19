@@ -15,6 +15,7 @@ models to help direct the vehicles motion.
 import os
 import numpy as np
 import keras
+import utils
 
 import donkeycar as dk
 
@@ -107,10 +108,10 @@ class KerasCategorical(KerasPilot):
         N = len(throttle[0])
         
         if N > 0:
-            throttle = dk.utils.linear_unbin(throttle, N=N, offset=0.0, R=0.5)
+            throttle = utils.linear_unbin(throttle, N=N, offset=0.0, R=0.5)
         else:
             throttle = throttle[0][0]
-        angle_unbinned = dk.utils.linear_unbin(angle_binned)
+        angle_unbinned = utils.linear_unbin(angle_binned)
         return angle_unbinned, throttle
     
     
@@ -202,10 +203,10 @@ class KerasBehavioral(KerasPilot):
         N = len(throttle[0])
         
         if N > 0:
-            throttle = dk.utils.linear_unbin(throttle, N=N, offset=0.0, R=0.5)
+            throttle = utils.linear_unbin(throttle, N=N, offset=0.0, R=0.5)
         else:
             throttle = throttle[0][0]
-        angle_unbinned = dk.utils.linear_unbin(angle_binned)
+        angle_unbinned = utils.linear_unbin(angle_binned)
         return angle_unbinned, throttle
 
 
@@ -233,10 +234,10 @@ class KerasLocalizer(KerasPilot):
         N = len(throttle[0])
         
         if N > 0:
-            throttle = dk.utils.linear_unbin(throttle, N=N, offset=0.0, R=0.5)
+            throttle = utils.linear_unbin(throttle, N=N, offset=0.0, R=0.5)
         else:
             throttle = throttle[0][0]
-        angle_unbinned = dk.utils.linear_unbin(angle_binned)
+        angle_unbinned = utils.linear_unbin(angle_binned)
         return angle_unbinned, throttle
 
 def default_categorical(input_shape=(120, 160, 3)):
@@ -489,7 +490,7 @@ class KerasRNN_LSTM(KerasPilot):
 
     def run(self, img_arr):
         if img_arr.shape[2] == 3 and self.image_d == 1:
-            img_arr = dk.utils.rgb2gray(img_arr)
+            img_arr = utils.rgb2gray(img_arr)
 
         while len(self.img_seq) < self.seq_length:
             self.img_seq.append(img_arr)
@@ -558,7 +559,7 @@ class Keras3D_CNN(KerasPilot):
     def run(self, img_arr):
 
         if img_arr.shape[2] == 3 and self.image_d == 1:
-            img_arr = dk.utils.rgb2gray(img_arr)
+            img_arr = utils.rgb2gray(img_arr)
 
         while len(self.img_seq) < self.seq_length:
             self.img_seq.append(img_arr)
