@@ -24,6 +24,7 @@ from donkeycar.parts.datastore import TubGroup, TubWriter
 from controller import LocalWebController, JoystickController
 from donkeyclock import Timestamp
 from kerasmodels import *
+import utils
 
 
 def drive(cfg, model_path=None, use_joystick=False, use_chaos=False):
@@ -141,6 +142,7 @@ def train(cfg, tub_names, new_model_path, base_model_path=None):
     """
     X_keys = ['cam/image_array']
     y_keys = ['user/angle', 'user/throttle']
+
 
     new_model_path = os.path.expanduser(new_model_path)
 
