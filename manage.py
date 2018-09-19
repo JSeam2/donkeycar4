@@ -3,8 +3,8 @@
 Scripts to drive a donkey 2 car and train a model for it.
 
 Usage:
-    manage.py (drive) [--model=<model>] [--type=<type>] [--js] [--chaos]
-    manage.py (train) [--tub=<tub1,tub2,..tubn>]  (--model=<model>) (--type=<type>) [--base_model=<base_model>] [--no_cache]
+    manage.py (drive) [--model=<model>] [--js] [--chaos]
+    manage.py (train) [--tub=<tub1,tub2,..tubn>]  (--model=<model>) [--base_model=<base_model>] [--no_cache]
 
 Options:
     -h --help        Show this screen.
@@ -25,7 +25,7 @@ from controller import LocalWebController, JoystickController
 from donkeyclock import Timestamp
 
 
-def drive(cfg, model_type="linear", model_path=None, use_joystick=False, use_chaos=False):
+def drive(cfg, model_path=None, use_joystick=False, use_chaos=False):
     """
     Construct a working robotic vehicle from many parts.
     Each part runs as a job in the Vehicle loop, calling either
@@ -73,14 +73,7 @@ def drive(cfg, model_type="linear", model_path=None, use_joystick=False, use_cha
           outputs=['run_pilot'])
 
     # Run the pilot if the mode is not user.
-    if model_type == "rnn":
-        pass
-    
-    elif model_type == "linear":
-        kl = KerasLinear()
-      
-    else:
-        pass
+    kl = KerasLinear()
     
     if model_path:
         kl.load(model_path)
@@ -190,15 +183,14 @@ if __name__ == '__main__':
     cfg = dk.load_config()
 
     if args['drive']:
-        drive(cfg, model_type=['--type'], model_path=args['--model'], use_joystick=args['--js'], use_chaos=args['--chaos'])
+        drive(cfg, model_path=args['--model'], use_joystick=args['--js'], use_chaos=args['--chaos'])
 
     elif args['train']:
         tub = args['--tub']
-        model_type = ['--type']
         new_model_path = args['--model']
         base_model_path = args['--base_model']
         cache = not args['--no_cache']
-        train(cfg, tub, model_type, new_model_path, base_model_path)
+        train(cfg, tub, new_model_path, base_model_path)
 
 
 
