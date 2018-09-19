@@ -3,8 +3,8 @@
 Scripts to drive a donkey 2 car and train a model for it.
 
 Usage:
-    manage.py (drive) [--model=<model>] [--js] [--chaos]
-    manage.py (train) [--tub=<tub1,tub2,..tubn>]  (--model=<model>) [--base_model=<base_model>] [--no_cache]
+    manage.py (drive) [--model=<model>] [--type=<type>] [--js] [--chaos]
+    manage.py (train) [--tub=<tub1,tub2,..tubn>]  (--model=<model>) (--type=<type>) [--base_model=<base_model>] [--no_cache]
 
 Options:
     -h --help        Show this screen.
