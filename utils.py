@@ -197,8 +197,6 @@ def linear_bin(a, N=15, offset=1, R=2.0):
     arr[int(b)] = 1
     a['user/throttle'] = arr
 
-    print(a)
-
     return a
 
 
