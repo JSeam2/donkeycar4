@@ -73,11 +73,14 @@ def drive(cfg, model_type="linear", model_path=None, use_joystick=False, use_cha
           outputs=['run_pilot'])
 
     # Run the pilot if the mode is not user.
-    if model_type == "linear":
-      kl = KerasLinear()
+    if model_type == "rnn":
+        pass
     
-    elif model_type == "rnn":
-      pass
+    elif model_type == "linear":
+        kl = KerasLinear()
+      
+    else:
+        pass
     
     if model_path:
         kl.load(model_path)
@@ -147,8 +150,14 @@ def train(cfg, tub_names, model_type, new_model_path, base_model_path=None):
 
     new_model_path = os.path.expanduser(new_model_path)
 
-    if model_type == "linear":
-      kl = KerasLinear()
+    if model_type == "rnn":
+        pass
+    
+    elif model_type == "linear":
+        kl = KerasLinear()
+    
+    else:
+        pass
     
     if base_model_path is not None:
         base_model_path = os.path.expanduser(base_model_path)
