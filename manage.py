@@ -150,7 +150,7 @@ def train(cfg, tub_names, model_type="linear", new_model_path, base_model_path=N
     if model_type == "linear":
       kl = KerasLinear()
     
-  if base_model_path is not None:
+    if base_model_path is not None:
         base_model_path = os.path.expanduser(base_model_path)
         kl.load(base_model_path)
 
