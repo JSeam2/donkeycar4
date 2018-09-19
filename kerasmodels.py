@@ -247,7 +247,7 @@ def default_categorical(input_shape=(120, 160, 3)):
     from keras.layers import Activation, Dropout, Flatten, Dense    
     
     opt = keras.optimizers.Adam()
-    drop = 0.1
+    drop = 0.5
 
     img_in = Input(shape=input_shape, name='img_in')                      # First layer, input layer, Shape comes from camera.py resolution, RGB
     x = img_in
