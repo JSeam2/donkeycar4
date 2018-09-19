@@ -93,7 +93,7 @@ def drive(cfg, model_path=None, use_joystick=False, use_chaos=False):
             return pilot_angle, user_throttle
 
         else:
-            return pilot_angle, pilot_throttle
+            return pilot_angle, -1*pilot_throttle
 
     drive_mode_part = Lambda(drive_mode)
     V.add(drive_mode_part,
