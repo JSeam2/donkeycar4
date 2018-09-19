@@ -109,7 +109,7 @@ def drive(cfg, model_path=None, use_joystick=False, use_chaos=False):
 
     throttle_controller = PCA9685(cfg.THROTTLE_CHANNEL)
     throttle = PWMThrottle(controller=throttle_controller,
-                           max_pulse=cfg.THROTTLE_FORWARD_PWM,
+                           max_pulse=cfg.THROTTLE_FORWARD_PWM * 1.8,
                            zero_pulse=cfg.THROTTLE_STOPPED_PWM,
                            min_pulse=cfg.THROTTLE_REVERSE_PWM)
 
