@@ -137,7 +137,7 @@ def drive(cfg, model_type="linear", model_path=None, use_joystick=False, use_cha
             max_loop_count=cfg.MAX_LOOPS)
 
 
-def train(cfg, tub_names, model_type="linear", new_model_path, base_model_path=None):
+def train(cfg, tub_names, model_type, new_model_path, base_model_path=None):
     """
     use the specified data in tub_names to train an artifical neural network
     saves the output trained model as model_name
