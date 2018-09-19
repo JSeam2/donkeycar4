@@ -123,9 +123,9 @@ def drive(cfg, model_path=None, use_joystick=False, use_chaos=False):
     # th = TubHandler(path=cfg.DATA_PATH)
     # tub = th.new_tub_writer(inputs=inputs, types=types)
 
-    # single tub
-    tub = TubWriter(path=cfg.TUB_PATH, inputs=inputs, types=types)
-    V.add(tub, inputs=inputs, run_condition='recording')
+    # single tub uncomment to save
+    #tub = TubWriter(path=cfg.TUB_PATH, inputs=inputs, types=types)
+    #V.add(tub, inputs=inputs, run_condition='recording')
 
     # run the vehicle
     V.start(rate_hz=cfg.DRIVE_LOOP_HZ,
