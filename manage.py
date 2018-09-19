@@ -25,7 +25,7 @@ from controller import LocalWebController, JoystickController
 from donkeyclock import Timestamp
 
 
-def drive(cfg, model_path=None, use_joystick=False, use_chaos=False):
+def drive(cfg, model_type="linear", model_path=None, use_joystick=False, use_chaos=False):
     """
     Construct a working robotic vehicle from many parts.
     Each part runs as a job in the Vehicle loop, calling either
@@ -73,7 +73,12 @@ def drive(cfg, model_path=None, use_joystick=False, use_chaos=False):
           outputs=['run_pilot'])
 
     # Run the pilot if the mode is not user.
-    kl = KerasLinear()
+    if model_type == "linear":
+      kl = KerasLinear()
+    
+    elif model_type == "rnn":
+      pass
+    
     if model_path:
         kl.load(model_path)
 
@@ -132,7 +137,7 @@ def drive(cfg, model_path=None, use_joystick=False, use_chaos=False):
             max_loop_count=cfg.MAX_LOOPS)
 
 
-def train(cfg, tub_names, new_model_path, base_model_path=None):
+def train(cfg, tub_names, model_type="linear", new_model_path, base_model_path=None):
     """
     use the specified data in tub_names to train an artifical neural network
     saves the output trained model as model_name
@@ -142,8 +147,10 @@ def train(cfg, tub_names, new_model_path, base_model_path=None):
 
     new_model_path = os.path.expanduser(new_model_path)
 
-    kl = KerasLinear()
-    if base_model_path is not None:
+    if model_type == "linear":
+      kl = KerasLinear()
+    
+  if base_model_path is not None:
         base_model_path = os.path.expanduser(base_model_path)
         kl.load(base_model_path)
 
@@ -174,14 +181,15 @@ if __name__ == '__main__':
     cfg = dk.load_config()
 
     if args['drive']:
-        drive(cfg, model_path=args['--model'], use_joystick=args['--js'], use_chaos=args['--chaos'])
+        drive(cfg, model_type=['--type'], model_path=args['--model'], use_joystick=args['--js'], use_chaos=args['--chaos'])
 
     elif args['train']:
         tub = args['--tub']
+        model_type = ['--type']
         new_model_path = args['--model']
         base_model_path = args['--base_model']
         cache = not args['--no_cache']
-        train(cfg, tub, new_model_path, base_model_path)
+        train(cfg, tub, model_type, new_model_path, base_model_path)
 
 
 
